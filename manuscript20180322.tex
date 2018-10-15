@@ -1,0 +1,273 @@
+%\documentclass[aps,prl,preprint,groupedaddress]{revtex4-1}
+%\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
+\documentclass[aps,prl,twocolumn,superscriptaddress]{revtex4-1}
+%\documentclass[aps,pre,preprint,superscriptaddress]{revtex4-1}
+%\documentclass[aps,pre,preprint,groupedaddress{revtex4-1}
+\usepackage{graphicx}% Include figure files
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+\usepackage[centertags]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{newlfont}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{subfigure}
+
+ 
+\begin{document}
+
+\title{Fast and Accurate Determination of Phase Transition Temperature in Computer Simulation}
+%\textrm{\textrm{\emph{}}}
+\author{Mingzhe Shao}
+\affiliation{Department of Packaging and Printing, Tianjin University of Science and Technology, Tianjin, China}
+
+\author{Xin Zhou$^{*}$}
+\affiliation{School of Physical Sciences, University of Chinese Academy of Sciences, Beijing 100049 China}
+
+%\footnotetext{\textit{The author whom should be responsible to answer. E-mail: xzhou@ucas.ac.cn }}
+%\footnotetext{\textit{$^{b}$~Institute of Chemistry, Chinese Academy of Sciences, Beijing 100190, China}}
+%\footnotetext{\textit{$^{c}$~Institute of Applied Physics, Chinese Academy of Sciences, Shanghai, China}}
+%\footnotetext{\textit{$^{d}$~Department of Packaging and Printing, Tianjin University of Science and Technology, Tianjin, China}}
+
+\date{\today}
+ 
+%\includegraphics{head_foot/DOI} & \noindent\LARGE{\textbf{hydrogen polarity of Interfacial Water Regulates Heterogeneous Ice Nucleation$^\dag$}} \\%Article title goes here instead of the text "This is the title"
+%\vspace{0.3cm} & \vspace{0.3cm} \\
+
+% & \noindent\large{Full Name,$^{\ast}$\textit{$^{a}$} Full Name,\textit{$^{b\ddag}$} and Full Name\textit{$^{a}$}} \\%Author names go here instead of "Full name", etc.
+
+% & \noindent\large{Mingzhe Shao,\textit{$^{a,b,d}$} Chuanbiao Zhang,\textit{$^{a}$} Conghai Qi,\textit{$^{c}$} Chunlei Wang,\textit{$^{c}$}, Jianjun Wang,\textit{$^{a,b}$} and Xin Zhou,\textit{$^{a}$}} \\%Author names go here instead of "Full name", etc.
+ 
+%\includegraphics{head_foot/dates} & \noindent\normalsize{
+\begin{abstract}  
+Generalized canonical ensemble (GCE) simulations are performed in water/ice coexisting systems to obtain its phase transition temperature. For the first time, the equilibrium at water/ice coexisting state can be studied in an individual simulation. This equilibrium, no longer a stochastic process, leads to a remarkable increase in both efficiency and accuracy of determining melting points. In this study, TIP4P/2005, TIP4P/ICE, mW water model are applied to build Ice Ih/water two-phase systems, then equilibrated at distinct areas in energy surface. States such as bulk water, ice and water/ice coexisting have been evolved, and their corresponding temperature are gained at the same time. The result of phase transition temperature is in excellent agreement with previous studies, is 253K, 272K, and 274K, respectively. Results from small systems show subtle accuracy lost.  These features make GCE approach 
+determining phase transition temperature robust, easy to use, and particularly good at working on computationally expensive systems.
+\end{abstract}
+%\end{tabular}
+
+\pacs{ } 
+
+\maketitle{}
+% \end{@twocolumnfalse} \vspace{0.6cm}
+
+%  ]
+%%%END OF TITLE, AUTHORS AND ABSTRACT%%%
+
+%%%FONT SETUP - please do not change any commands within this section
+%\renewcommand*\rmdefault{bch}\normalfont\upshape
+%\rmfamily
+%\section*{}
+%\vspace{-1cm}
+
+
+%%%FOOTNOTES%%%
+
+
+%Please use \dag to cite the ESI in the main text of the article.
+%If you article does not have ESI please remove the the \dag symbol from the title and the footnotetext below.
+%\footnotetext{\dag~Electronic Supplementary Information (ESI) available: [details of any supplementary information available should be included here]. See DOI: 10.1039/b000000x/}
+%additional addresses can be cited as above using the lower-case letters, c, d, e... If all authors are from the same address, no letter is required
+
+%\footnotetext{\ddag~Additional footnotes to the title and authors can be included \emph{e.g.}\ `Present address:' or `These authors contributed equally to this work' as above using the symbols: \ddag, \textsection, and \P. Please place the appropriate symbol next to the author's name and include a \texttt{\textbackslash footnotetext} entry in the the correct place in the list.}
+
+
+%%%END OF FOOTNOTES%%%
+
+%%%MAIN TEXT%%%%
+\section{Introduction}
+
+The transition between different molecular structures induce significant changes in physical properties.  However, these changes are not yet well understood in many transitions, their mechanism at the molecular level remains largely unknown.
+exp1:The transition between the ferromagnetic and paramagnetic phases of magnetic materials at the Curie point.
+exp2:transition into superconductive state.
+exp3: Hydrogen bonding between individual water molecules yields a disordered three-dimensional hydrogen-bond network whose rugged and complex global potential energy surface permits a large number of possible network configurations, ~\cite{Matsumoto2002} making water freezing one of the most intriguing phase transition system. 
+These issues call forth more comprehensive knowledge of phase transition, especially the details in phases-coexisting systems(PCS). Studying PCS by performing direct canonical or isothermal–isobaric(NPT) ensemble is well performed worldwide and generally accepted, however the efficiency of this approach is largely determined by the nucleation energy barrier of PCS. Sampling critical states is hard since surface tension increased system energy leads to a less probability of being occupied. Besides, studying thermodynamics by sampling in non-equilibrium systems is controversial. 
+
+Estimating transitional temperature is of absolute importance in describing PCS. The technique of direct coexistence is a first choice, studies have been carried out by simulating PCS in a temperature range, order parameters such as density are used to monitor the transition process. Transitional temperature is thus determined as the spinodal temperature of order parameter. However, evolution of states at critical temperature is stochastic, accuracy of this approach depends on not only sensitiveness of order parameter and the temperature interval in simulations, the sample volume matters as well. Another method is proposed by fitting the temperature dependence of free energy for both two phase, the intersection stands for the transitional temperature. This method shows better precision, but estimating free energy of systems is not convenient and takes extra work.
+
+In this work, we aim to provide a simple method of high-precision and efficiency for determining the phase transition temperature in PCS. To achieve such goal, generalized canonical ensemble (GCE) has been implemented successfully in ice Ih/water PCS with mW, TIP4P-2005 and TIP4P-ICE water models. GCE can sufficiently visit the phase-coexistence regions and its energy distribution can be Gaussian-like. Thus the stochastic nature of phase transition can be largely get rid of, making one single simulation enough to estimate phase transition temperature. Besides the enhanced sampling in GCE expanded sample volume insure considerable precision of estimation.
+
+This work is organized as follows: Sec. II describes the models and methodology used in this work. Section III presents the results for phase-coexistence region for different water potential models. The papers ends with a final discussion and the conclusions of this work.
+\section{Models and Methods} 
+\subsection{A. Water models}
+So far, water has been modeled in several different manner such as multi-site model\cite{Sanz2004,Bryk2002,Horn2005,Gonzalez2010,Kumar2012,Sedlmeier2011,Vega2007,Yu2013,Himoto2011}, implicit water\cite{Huißmann2012}, coarse-grained model\cite{Molinero2009}. Multi-site mode have been widely applied to reveal the thermodynamic, dynamic, and structural anomalies of water\cite{Gao2000,Bryk2002,Sanz2004}, but some times computations can be very time-consuming, especially when it comes to water freezing at low supersaturation\cite{Mishima1998} . To observe puzzling behavior of water close and inside “no man’s land”\cite{Moore2011}, a coarse-grained model mW water\cite{Molinero2009} using Stillinger-Weber (SW) potential to describe the tetrahedral hydrogen bond network in water and ice has been developed to accelerate the computation. In this paper, tip4p-2005, tip4p-ice and mW water models were applied to verify our method in determining phase transition temperature. In Table\ref{table:water model}  the melting temperature of all water models, the geometry and the potential parameter of full atom models are presented. 
+
+\subsection{B. GCE method}
+
+Instead of using common canonical ensemble,
+
+For detecting whether the rearrangement of IW or the ionic charge of substrate itself controls  water freezing, we prepare the ice-lattice-like but polarized IW in absence of (AgI-like) solid substrates, and check the water freezing on a few (usually $4\sim 6$) ice-like polarized IW layers. The polarized IW has the same ice lattice but gradually varied hydrogen polarity $\xi$ from $0$ (the ice Ih) to $1$ (the ice XI)~\cite{Salzmann2006,Salzmann2009,Raza2011,Fan2010,Geiger2014}. As shown in Figure S4 of Supplementary, the freezing of supercooled water is also found to become more difficult as increasing the hydrogen polarity of the ice-like polarized polarize in absence of AgI-like solid substrates.  
+At $265~\mathrm{K}$, water freezes on the ice-like polarized IW layers with $\xi =0.11$, but does not form an ice cluster at $\xi=0.23$ during $20~\mathrm{ns}$ regular MD simulations. At $255~\mathrm{K}$, results are similar, water freezes at $\xi=0.23$, but not at $\xi=0.63$ within  $50~\mathrm{ns}$. 
+    
+It is difficult (if not impossible) to directly simulate water freezing on IW with larger $\xi$ due to the requirement of too long MD time. 
+Recently, Sanz~\emph{et al.}~\cite{Sanz2013} developed an efficient indirect MD method to study the homogeneous ice nucleation of bulk water. They detected the corresponding supercooled temperature of a preset spheric ice nucleus instead of directly detecting the critical nucleus at a temperature. 
+The main difficulty to expand the method in freezing on substrate surfaces is that the shape and structure of critical ice nucleus, such as the contact angle and crystalline surface of nucleus on substrates, are unknown. 
+Here, we present a subtle simulation scheme to gradually adjust the shape and size of preset ice nucleus on substrates for approaching to a critical one, then get the corresponding supercooled temperature:    
+(1) we generate a sphere-cap (or other shapes, such as spheric) hexagonal ice (I$_{h}$) nucleus and locate it on the surface then immerse them in supercooled water as the initial conformation. We also guess a few neighboring supercooled temperatures around a central temperature; (2) we simulate from the initial conformation a segment of time, \emph{e.g.}, $10~ \mathrm{ns}$, at each set temperatures; (3) we choose one from these trajectories where the shape of ice nucleus was most obviously adjusted (but not completely melting out or growing up). The final conformation of chosen trajectory is set as new initial conformation, and the corresponding temperature is as the new central temperature. We reset a few new simulation temperatures around the central temperature by supposing the ice nucleus will grow or melt (with or without shape adjustment) at these temperatures, respectively. 
+(4) We repeat the step (2) and (3) a few times, until the ice nucleus less correlates with the preset one at beginning, and its shape do not change obviously any more. Thus we get a critical ice nucleus on substrate, and we can get two neighbouring temperatures where the ice nucleus grows and shrinks, respectively. The medium value approximately gives the corresponding temperature of the critical nucleus. Figure~\ref{fig:fig3} illustrates the whole simulation scheme on the ice-like IW with $\xi=0.234$. The ice nucleus is sufficiently adjusted to change its shape and its size (initial $2000$ to final $2350$ molecules) after $6 \times 10~\mathrm{ns}$ simulations. Then we simulate the final $10~\mathrm{ns}$ trajectories at a few temperatures and find the ice nucleus shrinks at $259~\mathrm{K}$ but growing at $258~\mathrm{K}$, thus we get the middle temperature $T=258.5~\mathrm{K}$ where the ice nucleus is in critical. 
+ 
+We apply the method on the ice-like polarized IW with various $\xi$ to get the critical ice nuclei and the corresponding temperatures $T$. By extracting the outlines of the final ice nuclei from the average density of ice nuclei $\rho = 0.5 \rho_{I}$, we find that all the critical ice nuclei are approximately sphere-cap, as the expectation of the classic nucleation theory (CNT), except small deviation in the first layers in small and large $\xi$ cases, see Figure~\ref{fig:fig4}. Here $\rho_{I}$ is the density of bulk ice, about $0.906~ {\textrm g/cm^3}$ in this model. From the simulations, we have the size $N_c$, radius $R$, the (apparent) contact angle $\theta$ of the sphere-cap critical nucleus, the corresponding (supercooled) temperature and the free energy barrier $\Delta G$ of nucleation, shown in Table~\ref{table:tab1}. 
+We estimate the free energy barriers from the CNT, $\Delta G = f(\theta) \frac{4 \pi \gamma}{3 (\kappa \Delta T)^{2}}$. Here $f(\theta)=\frac{1}{4}(2+\cos\theta)(1-\cos\theta)^2$ is the shape factor of spherical cap. 
+%Due to the similar size of the applied critical ice nuclei $N_c$ in our simulations, 
+%The free energy barriers locate in $30 - 50~\mathrm{kcal/mol}$ due to the similar size of critical nuclei, $N_c \approx 2000$. The corresponding supercooled temperatures $\Delta T = T_m - T$, varied from the slight supercooling $\Delta T = 10~\mathrm{K}$ on the small polarisation ($\xi = 0.187$) IW to the deep supercooling $\Delta T = 20~\mathrm{K}$ on the large polarization ($\xi = 0.8$) surface. 
+
+
+In Figure~\ref{fig:fig5}, we find that the reverse of radius $R$ of critical nucleus is proportional to the corresponding  supercooled temperature, $1/R \approx \kappa \Delta T$, with 
+$\kappa \approx 0.03~ \mathrm{nm^{-1} K^{-1}}$. The result is in good agreement with the expectation of CNT, and $\kappa = \frac{\rho_{I} \alpha}{2 \gamma} \approx 0.02~ \mathrm{nm^{-1} K^{-1}}$. Here 
+% we have $R = \frac{2 \gamma}{\rho_{I} \alpha \Delta T}$, . Using the ice-water surface tension, $\gamma \approx 26~ \mathrm{mN/m}$, we have 
+$\alpha = \frac{|\Delta \mu|}{\Delta T}$ about $0.0043~\mathrm {kcal/mol/K}$~\cite{Sanz2013}, the ice-water surface tension $\gamma \approx 26~\mathrm{mN/m}$, and $\Delta \mu$ is the chemical potential difference between ice and water. 
+ 
+The cosine of contact angle is found to be linearly related to $\xi$ in the whole range $0<\xi<1$, as 
+%, from about $72$ degrees ($\xi = 0.187$), to $90$ degrees at $\xi =0.4$, and $134$ degrees while $\xi=0.8$. As 
+shown in Figure~\ref{fig:fig5}. 
+%$\cos \theta$ is found to be linearly dependent on $\xi $ in the whole $0<\xi<1$. 
+From the Young's equation, we have 
+\begin{eqnarray}
+\frac{\Delta \gamma(\xi)}{\gamma} \approx 0.66 - 1.7  \xi.
+\end{eqnarray}
+Here $\Delta \gamma(\xi) = \gamma_{water,IW}(\xi) - \gamma_{ice, IW}(\xi)$, the difference of the water-IW and the ice-IW surface tensions. 
+%between 
+% \equiv \gamma_{s,w}(\xi) - \gamma_{s,i}(\xi)$, and 
+%$\cos \theta(\xi) = \frac{\gamma_{s,w}(\xi) - \gamma_{s,i}(\xi)}{\gamma}$. Here 
+%$\gamma$, 
+%water -IW surface tension $\gamma_{water,IW}(\xi)$ and the ice-IW surface tension $\gamma_{ice, IW}(\xi)$. 
+%It means that 
+%Thus $\gamma_{water,IW}(0) = \gamma_{ice,IW}(0) + 0.66 \gamma$.  
+Considering the fact that the IW with $\xi = 0$ is similar to the normal hexagonal ice, 
+%$\gamma_{ice,IW}(0)$ has a small value, and fast increases as $\xi$, 
+we have $\gamma_{ice,IW}(\xi) = \gamma (\delta_1 + k_1 \xi + \cdots)$, while 
+$\gamma_{water,IW}(\xi) =\gamma (1- \delta_2 + k_2 \xi +\cdots)$. Here both $\delta_1$ and $\delta_2$ are small positive values, and $k_1 > k_2 > 0$, since liquid water is more flexible than ice nucleus to rearrange its conformations on IW. Therefore, we have, $\delta_1 + \delta_2 \approx 0.34$, and $k_1 - k_2 = 1.7$. The higher order dependence of surface tensions on $\xi$ seems very small (or cancel each other) even while $\xi$ is approached to unity, where the completely polarized IW distorts the lattice of both itself and the growing ice nucleus to avoid dangling hydrogen bonds. 
+%Since liquid water is more flexible than ice nucleus to rearrange its conformations on IW, 
+%At $\xi=0$, 
+%As increasing $\xi$, 
+%$\gamma_{ice,IW}(\xi)$ from a small value 
+%starts from $0.66 \gamma$ lower than $\gamma_{water,IW}$ 
+%at $\xi = 0$, then 
+%Thus $\gamma_{ice,IW}(\xi) \approx \gamma_{water,IW}(\xi)$ at $\xi \approx 0.4$, 
+%increases faster than $\gamma_{ice,IW}(\xi)$ and reach the value of   to be comparable with the latter at $\xi = 0.4$ (
+%where the corresponding contact angle $\theta = 90^{\mathrm o}$. 
+%, then goes on increasing to $1 \gamma$ higher than the latter at $\xi = 1.0$ (the corresponding $\theta = 180^{\mathrm o}$). 
+ 
+%As the increasing of $\xi$ of IW, the mismatching of hydrogen-bond (HB) connections between ice nucleus and IW increases. Since the energy cost of dangling HBs is too high, the ice nucleus and the IW distort their lattice to avoid the dangling of HBs, 
+%As shown in  Figure~\ref{fig:fig5}, the increase of $\gamma_{ice,IW}$ as $\xi$ comes from the increasing lattice distortion in rearranging both the ice and IW in their interface, since 
+
+%increases so that the surface tension $\gamma_{ice,IW}(\xi)$ increases. Considering the fact that liquid water is more flexible than ice nucleus to rearrange its conformations on IW, we might ignore the dependence of $\gamma_{water,IW}(\xi)$ on $\xi$, then we have $\gamma_{ice,IW}(\xi)/\gamma \approx 1.7 \xi$. It indicates that the surface tension between ice nucleus and the IW with about $\xi \approx 0.6$ is similar to that of ice nucleus with  liquid water. The result indicates that the surface tension between the ice Ih and ice XI is about $1.7$ times of that between the ice Ih and liquid water. It implies about $1/3$ mismatching of hydrogen bonds between the ice nucleus and liquid water, which is a reasonable estimate.  
+
+  
+%The matching fraction of hydrogen bonds between the ice Ih (non-polarity) and polarized ice with $\xi$ is approximately about $1 - \xi/2$, \emph{e.g.}, only half hydrogen bonds can form between ice Ih and ice XI, see Supplementary, thus the surface energy is linearly related to $\xi$. The hydrogen bond network between the surfaces can distorted a little to decrease the surface energy but do not change the linear relation, then $\gamma_{s,i} = \gamma_{s,i}(0) + \epsilon \xi$, where $\epsilon$ is in the order of the interlayer hydrogen-bond energy of unit area Ih.  %interlayer adhesive energy of ice Ih due to hydrogen bonds. 
+%in ice Ih, and $\epsilon_{hb}$ is the average energy of single hydrogen bond, about $10 kJ/mol$, and $n$ is the number of a  
+%We approximately have the contact angle of ice nuclei on the polarized IW surface, 
+%Thus, we have, 
+%\begin{eqnarray}
+%\cos \theta(\xi) \approx \cos \theta_0 - k \xi , 
+%\nonumber
+%\end{eqnarray} 
+%which is verified, and $\cos \theta_0 \approx 0.66$, $k = 1.7$, see the bottom panel of Fig.\ref{fig:fig5}. 
+%we find the linear relation between $\cos \theta$ and $\xi$ in the whole $\xi$ range, . 
+%Since the non-polarized IW ($\xi=0$) is very similar to the normal ice except the applied constraints, $\cos \theta_0$ is not large different from unity. 
+  
+%\section{Conclusions} 
+As summary, we show that the matching between the structure of interfacial water (IW) and the ice, involving both the ice-like oxygen lattice order and the hydrogen direction disorder, corresponds to the capability of substrates on the heterogeneous ice nucleation, only the lattice matching of substrates with ice may be not sufficient to aid ice nucleation. The result is helpful to finding and designing anti-/aid- freezing materials for application. 
+    
+%\section{Acknowledgement} 
+The work is under the financial support of the NSFC Grant with No. 11574310, 11674345. C.-L. Wang thanks the support of the Youth Innovation Promotion Association, CAS. 
+
+
+\begin{figure}[ht]
+\centering{}\includegraphics[width=0.5\textwidth]{fig1.png} 
+\caption{The growing of ice cluster upon the AgI-like substrates with different $q$ is shown. $T=260~\mathrm{K}$.
+Inset: the ice-like first layer of interfacial water under constraint. Ag: white sphere; I: purple sphere. 
+\label{fig:fig1} }
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \subfigure[]{
+    \label{fig:fig2a}
+    \includegraphics[width=0.5\textwidth,angle=0]{fig2a.png}}
+  \subfigure[]{
+  \label{fig:fig2b}
+  \includegraphics[width=0.5\textwidth,angle=0]{fig2b.png}}
+%\centering{}\includegraphics[width=8cm]{fig2} 
+\caption{ (a) The hydrogen polarity of interfacial water varies as the ionic charge of surface. The side view of water molecules on substrates are shown while $q =0.6~ e$ (bottom-right) and $q= 1.4~e $ (top-left). (b) The approximate  phase diagram of frozen temperature and hydrogen polarity of interfacial water. Each point is obtained by a $50~ \mathrm{ns}$ standard MD simulations from initial liquid.
+ }
+\label{fig:fig2} 
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering{}\includegraphics[width=0.5\textwidth]{fig3.png} 
+\caption{ The time evolution of the size and shape of ice nucleus during the simulations of adjusting critical ice nucleus  on the IW with $\xi=0.234$. The outlines of half ice nucleus at $0$, $30$ and $60~\mathrm{ns}$ are shown.  
+\label{fig:fig3} }
+\end{figure}
+
+\begin{figure}[ht]
+\centering{}\includegraphics[width=0.5\textwidth]{fig4.png} 
+\caption{ Top: the obtained critical ice nuclei on the polarized IW surface with $\xi = 0.187, 0.234, 0.4$ and $0.8$ in (a), (b), (c) and (d), respectively. All nuclei are sphere-cap, here only show the right half of them due to the symmetry. Bottom:  the hydrogen-bond connection between atoms in critical nucleus (red) and that in polarized IW (blue) with $\xi =0.234$ and $0.8$, respectively. 
+\label{fig:fig4} }
+\end{figure}
+
+\begin{table}
+\caption{The critical ice nuclei on the ice-like IW with different hydrogen polarity $\xi$. The unit of radius $R$ is the interlayer distance of ice, about $3.7$\AA, (the error of R is about $0.1$ in the unit); free energy $\Delta G$ in $\mathrm{kcal/mol}$.}
+
+\centering{}%
+\begin{tabular}{ccccccccc}
+%\toprule 
+\hline
+{ $\xi$} & {$\theta$} & { $f\left(\theta\right)$}  & {R}  & {$N_c$} & {T (K)} & {  $\Delta T$}  & {$\Delta G$ }\tabularnewline
+%\midrule
+\hline
+{ 0.187} & { 72} & {0.28}  & {10.0}  & {1950} & {262 $\pm 1$} & {10} & {50}\tabularnewline
+{ 0.234} & { 78} & {0.35} & { 8.8}  & {2350} & {258 $\pm 1$} & {14} & {32} \tabularnewline
+	{ 0.400} & { 90} & {0.5 }  &{ 7.7} & {1750} & {257 $\pm 1$} & {15} & {40} \tabularnewline
+%{ 0.600} &  &  &  &  &  & \tabularnewline
+{ 0.800} & {134} & {0.94}  &{ 6.1}  & {2300} & {252 $\pm 1$} & { 20} & {42}\tabularnewline
+%{ 1.000} & { 140.46\textpm{} 6.94} & { 0.863\textpm 0.045} & { 248\textpm 1} & { 24\textpm 1} & { 21.575\textpm 1.125} & { 2.78\textpm 0.05}\tabular newline
+%\bottomrule
+\hline
+\end{tabular}
+\label{table:tab1}
+\end{table}
+
+\begin{figure}[ht]
+  \centering
+%  \subfigure[]{
+\includegraphics[width=0.5\textwidth,angle=0]{fig5.png}
+%  \subfigure[]{
+%  \label{fig:fig5b}
+%  \includegraphics[width=0.48\textwidth,angle=0]{fig5-1.png}}
+%\centering{}\includegraphics[width=0.48\textwidth,angle=0]{fig5.png} 
+\caption{ Left, the reverse radius of ice nuclei versus supercooling temperatures. The line is fitted based on the classic nucleation theory; right, the relation between contact angles of ice nuclei versus the hydrogen polarity of IW. 
+%(g) The size of an ice nucleus changes as time in one of our simulations. Here $\xi=0.234$. The critical nucleus and the corresponding temperature $T \approx 258 \mathrm{K}$ are obtained in the final segment from $60$ to $70 \mathrm{ns}$. The earlier segments of simulation are used to adjust the shape of nucleus, see the main text. 
+\label{fig:fig5} 
+}
+\end{figure}
+
+\begin{table}
+\caption{Parameters of water model.}
+\centering{}%
+\begin{tabular}{cccccccc}
+%\toprule 
+\hline
+{Model} & {$d_{oh}(\overset{\circ}{A})$} & { H-O-H}  & {$\sigma (\overset{\circ}{A})$}  & {$\epsilon/k (K)$} & {$q_H(e)$} & {  $T_m (K)$} 
+\tabularnewline
+%\midrule
+\hline
+
+{ TIP4P-2005} & { 0.9572} & {104.52}  & {3.3589}  & {93.20} & {0.5564} & {252.1} \tabularnewline
+{ TIP4P-ICE} & { 0.9572} & {104.52}  & {3.1668}  & {106.1} & {0.5897} & {272.2} \tabularnewline
+	{ mW} & { -} & {-}  & {-}  & {-} & {-} & {274.6}  \tabularnewline
+%\bottomrule
+\hline
+\end{tabular}
+\label{table:water model}
+\end{table}
+
+%%%END OF MAIN TEXT%%%
+
+\bibliography{gce-PTtemp}
+%You need to replace "rsc" on this line with the name of your .bib file
+%\bibliographystyle{rsc} %the RSC's .bst file
+
+\end{document}
