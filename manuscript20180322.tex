@@ -14,7 +14,6 @@
 \usepackage{color}
 \usepackage{natbib}
 \usepackage{subfigure}
-
  
 \begin{document}
 
@@ -83,9 +82,6 @@ In a word,  GCE/GNPT can be applied to sufficiently visit the phase-coexistence 
 
 \subsection{C. Simulation Details}
 In our work, system is built with 32480 or 4584 water molecules for mW (approximately $400 \AA \times 56 \AA \times 43 \AA$) and full atom water model (approximately $200 \AA \times 26 \AA \times 29 \AA$), respectively. Ice phase is extract from 20ns equilibrated bulk ice Ih at 260K, with x-y plane set as ice Ih basal plane, leaving the secondary prismatic plane ($1\overline{2}10$) in contact with bulk water. The two phases system are equilibrated for another 100 ps to produce the interfaces. The size in x direction is about 7 time of y and z direction, to ensure stable interfaces and study size effect in measuring phase transition temperature. Besides, systems of distinct size have been carried out to test the universality of this method.
-
-Size effect in GCE/GNPT method determined phase transition temperature. Data from Fig.\ref{fig:PTtemp-mw} is plot in black, the other data is extract from GNPT of 44800, 5971, 2030 water molecules, with size approximately $151\AA \times  156 \AA \times  58 \AA$, $54 \AA \times  58 \AA \times  58 \AA$, $52\AA \times  56 \AA \times  22\AA$,respectively.
-
 All MD simulations were carried out in GNPT employing LAMMPS molecular dynamics code with GCE module\cite{Xu2012}. A Nosé−Hoover barostat\cite{Nose1984,Hoover1985} with  relaxation times 1 ps are used to keep the pressure fixed at 1atm. For full atom water model, a time step of 2\,fs  was used in all simulations. Lennard-Jones interactions are truncated smoothly at 14.0 Å. Nontruncated electrostatic interactions are treated by the particle-particle particle mesh solver (pppm) with a real space cutoff of 11.0 Å and precision tolerance of $10^{-5}$.  The mW water is built by following previous work of Molinero and co-workers\cite{Molinero2009} .
 \section{Results and Discussion} 
 The direct coexistence technique is to put in contact two or more phases in one simulation box and study its thermodynamics. This method is generally accepted in studying multi-phase systems and used very often in outlining phase diagram\cite{Conde2017,Sanz2004,Watanabe2012}. In our work, we still build our system in such classic way to clarify the effect induced by crystal lattice and interfacial crystal plane. And of course, save computational cost especially in freezing of full atom water. The coexisting system is balanced at 250K for 100 ps, this short simulation is not enough for system to attain equilibrium, but able to relax the interfaces and a energy value $H=E+PV$ can be extract to guide setting  energy value of GNPT simulations. For mw ice Ih/water case, this value is around $-10.7 kcal/mol$,  the GNPT equilibrated conformation with energy value range from $-9.1$ to $-11.3$ are shown in Fig\ref{fig:conformation}. The energy value can be simply regarded as the numerical average of water and ice energy, while lower value means more ice content. It is quite the same with unusal NPT ensemble if the equilibrated conformation is bulk phase, since energy distribution in bulk phase is always unimodal. That is, when H = -9.9,-10.1,-11.5 , GNPT ensembles act like NPT ensemble of bulk water at 312K,286K and bulk ice at 268K, as the evolutions of GNPT ensembles  shown in Fig.\ref{fig:evolution}.
@@ -101,11 +97,14 @@ It takes a comparably short time (less than 2ns) for mW water to attain equilibr
 \caption{The evolution of GNPT ensembles at distinct energy levels: Starting with a ice Ih/water coexisting state. Only the former 5ns equilibrium is plotted.
 \label{fig:evolution} }
 \end{figure}
-It has to be point out, melting point we extract from GNPT ensembles of distinct energy level slightly differs. This reason is not yet clear, we ascribe thisas a size effect of ice phase for two reason. First, bulk ice are capable of adjusting their lattice to a lower energy level, leading a better thermostability, causing melting always happens on the interface rather than the bulk phase. Second, classic nucleation theory indicates that larger critical nuclei calls for a higher critical temperature.  We looking forward a more comprehensive work to elucidate this effect. In this work, the transition temperature of ice Ih/water for mW water model $T_m=275.15K\pm 0.20K$ is determined as the uniformized value of phases coexisting GNPT ensembles. \begin{figure}[ht]
+It has to be point out, melting point we extract from GNPT ensembles of distinct energy level slightly differs. This reason is not yet clear, we ascribe thisas a size effect of ice phase for two reason. First, bulk ice are capable of adjusting their lattice to a lower energy level, leading a better thermostability, causing melting always happens on the interface rather than the bulk phase. Second, classic nucleation theory indicates that larger critical nuclei calls for a higher critical temperature.  We looking forward to a more comprehensive work to elucidate this effect. In this work, the transition temperature of ice Ih/water for mW water model $T_m=275.15K\pm 0.20K$ is determined as the uniformized value of phases coexisting GNPT ensembles. 
+
+\begin{figure}[ht]
 \centering{}\includegraphics[width=0.5\textwidth]{PTtemp-mw.png} 
 \caption{The phase transition temperature in GNPT ensembles. Dash line refers to 274.6K, the melting point for mW water proposed in previous study \cite{Molinero2009} . 
 \label{fig:PTtemp-mw}} 
 \end{figure}
+
 To further explore the performance of this approach, we carried out more simulations of different system size. Three GNPT ensembles of 44800, 5971, 2030 water molecules are built  to apply the strategy, with size approximately $151\AA \times  156 \AA \times  58 \AA$, $54 \AA \times  58 \AA \times  58 \AA$, $52\AA \times  56 \AA \times  22\AA$ respectively.  Their result is colored in red in Fig. \ref{fig:sizeeffect},  which is $275.08\pm 0.17$, $275.00\pm 0.30$, and $275.21\pm 0.22$, while the black one is $275.08\pm 0.17$  from the uniformized value in Fig. \ref{fig:evolution}.
 
 \begin{figure}[ht]
